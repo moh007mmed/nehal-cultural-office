@@ -3,102 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة نهال أحمد حسين | Batch 32 Cultural</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>منصة نهال أحمد حسين الثقافية | Batch 32</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* CSS Section */
+        :root {
+            --nature-white: #ffffff;
+            --soft-gray: #fcfcfc;
+            --library-brown: #5d4037;
+            --leaf-green: #2d5a27;
+            --text-main: #333333;
+            --text-light: #777777;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--nature-white);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--library-brown);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li { margin-right: 30px; }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover { color: var(--leaf-green); }
+
+        /* General Layout */
+        section {
+            padding: 100px 10%;
+            min-height: 100vh;
+            display: none; /* سيتم التبديل عبر JS */
+        }
+
+        section.active { display: block; animation: fadeIn 0.8s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        /* Home Page */
+        .hero {
+            text-align: center;
+            background: url('https://www.transparenttextures.com/patterns/paper.png');
+        }
+
+        .hero-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: #eee;
+            margin-bottom: 30px;
+            border: 5px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        h1 { font-family: 'Amiri', serif; font-size: 3rem; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; color: var(--text-light); max-width: 700px; margin: 0 auto 30px; }
+
+        .btn-start {
+            background: var(--library-brown);
+            color: white;
+            padding: 12px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        /* Blog Page */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .post-card {
+            background: var(--soft-gray);
+            padding: 25px;
+            border-radius: 10px;
+            border-right: 4px solid var(--leaf-green);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+
+        .post-card h3 { font-family: 'Amiri', serif; margin-bottom: 10px; color: var(--library-brown); }
+        .post-card p { font-size: 0.9rem; color: var(--text-light); }
+        .post-tag { font-size: 0.7rem; color: var(--leaf-green); font-weight: bold; }
+
+        /* Batch 32 Page */
+        .batch-section { text-align: center; }
+        .batch-info { background: #fdfaf6; padding: 40px; border-radius: 15px; border: 1px dashed var(--library-brown); }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: var(--soft-gray);
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+    </style>
 </head>
 <body>
 
-    <section id="hero">
-        <div class="hero-overlay">
-            <nav class="glass-nav">
-                <div class="logo">B32<span>.Cultural</span></div>
-                <ul>
-                    <li><a href="#hero">الرئيسية</a></li>
-                    <li><a href="#medical">المقالات الطبية</a></li>
-                    <li><a href="#quotes">إلهامات</a></li>
-                </ul>
-            </nav>
+    <nav>
+        <div class="logo">نهال أحمد حسين</div>
+        <ul>
+            <li><a href="#" onclick="showPage('home')">الرئيسية</a></li>
+            <li><a href="#" onclick="showPage('blog')">المقالات الطبية</a></li>
+            <li><a href="#" onclick="showPage('batch')">Batch 32</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero active">
+        <div class="container">
+            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=200&q=80" alt="ثقافة" class="hero-img">
+            <h1>نهال أحمد حسين</h1>
+            <p>الأمين الثقافي للدفعة 32. أهلاً بكم في هذه المساحة الهادئة حيث يلتقي العلم بالثقافة. أدعوكم للتجول في قسم المقالات الطبية التي أعددتها بعناية من مصادر موثوقة لتعزيز وعينا كجيل طبي واعد.</p>
+            <a href="#" class="btn-start" onclick="showPage('blog')">ابدأ القراءة الآن</a>
+        </div>
+    </section>
+
+    <section id="blog">
+        <div class="container">
+            <h2 style="font-family: 'Amiri'; font-size: 2.5rem; text-align: center;">المدونة الطبية</h2>
+            <p style="text-align: center; color: #888;">إعداد وإشراف: نهال أحمد حسين</p>
             
-            <div class="hero-content">
-                <h2 class="subtitle">الأمين الثقافي للدفعة 32</h2>
-                <h1 class="main-title">نهال أحمد حسين</h1>
-                <div class="line"></div>
-                <p class="bio">رؤية تجمع بين شغف الطب وعمق الثقافة، لخدمة جيل Batch 32 المبدع.</p>
-                <div class="scroll-indicator">
-                    <p>استكشف المحتوى الطبي</p>
-                    <i class="fas fa-chevron-down"></i>
+            <div class="blog-grid" id="blog-posts">
                 </div>
+        </div>
+    </section>
+
+    <section id="batch" class="batch-section">
+        <div class="container">
+            <h2 style="font-family: 'Amiri'; font-size: 2.5rem; margin-bottom: 30px;">Batch 32</h2>
+            <div class="batch-info">
+                <p>دفعتنا ليست مجرد زملاء دراسة، بل هي عائلة تجمعنا فيها طموحات الطب وشغف التطوير. في هذا الركن، نوثق مسيرتنا الثقافية والاجتماعية تحت إشراف الأمانة الثقافية.</p>
+                <br>
+                <p><strong>"معاً نحو غدٍ طبي مشرق"</strong></p>
             </div>
         </div>
     </section>
 
-    <section id="quotes" class="quote-section">
-        <div class="container">
-            <i class="fas fa-quote-right quote-icon"></i>
-            <blockquote>
-                "الطب يداوي الجسد، والثقافة تداوي الروح.. وبينهما نصنع مستقبلاً يليق بـ Batch 32."
-            </blockquote>
-            <cite>— نهال أحمد حسين</cite>
-        </div>
-    </section>
-
-    <section id="medical" class="container">
-        <div class="section-header">
-            <span class="tag">بإشراف نهال أحمد</span>
-            <h2>المقالات الطبية الموثوقة</h2>
-            <p>محتوى طبي منتقى من المجلات العلمية العالمية لطلاب الدفعة 32</p>
-        </div>
-
-        <div class="articles-grid">
-            <article class="medical-card">
-                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=500&q=80')"></div>
-                <div class="card-body">
-                    <span class="category">أبحاث حديثة</span>
-                    <h3>مستقبل زراعة الأسنان الرقمية</h3>
-                    <p>نظرة عميقة في كيفية تحول تقنيات الـ 3D في جراحة الفم والأسنان وفقاً لآخر تحديثات JADA.</p>
-                    <div class="card-footer">
-                        <span class="source"><i class="fas fa-microscope"></i> المصدر: PubMed</span>
-                        <a href="#" class="more-link">اقرأ المزيد</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="medical-card">
-                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=500&q=80')"></div>
-                <div class="card-body">
-                    <span class="category">صحة عامة</span>
-                    <h3>إدارة ضغوط الدراسة الطبية</h3>
-                    <p>استراتيجيات مثبتة علمياً للتعامل مع "الاحتراق النفسي" لدى طلاب الكليات الطبية.</p>
-                    <div class="card-footer">
-                        <span class="source"><i class="fas fa-university"></i> المصدر: WHO</span>
-                        <a href="#" class="more-link">اقرأ المزيد</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="medical-card">
-                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=500&q=80')"></div>
-                <div class="card-body">
-                    <span class="category">علم الأعصاب</span>
-                    <h3>تأثير القهوة على الذاكرة طويلة المدى</h3>
-                    <p>دراسة حول الجرعات المثالية من الكافيين لتعزيز الأداء الأكاديمي دون التأثير على جودة النوم.</p>
-                    <div class="card-footer">
-                        <span class="source"><i class="fas fa-check-circle"></i> المصدر: Nature Medical</span>
-                        <a href="#" class="more-link">اقرأ المزيد</a>
-                    </div>
-                </div>
-            </article>
-        </div>
-    </section>
-
     <footer>
-        <div class="footer-bottom">
-            <p>جميع الحقوق محفوظة لـ <strong>نهال أحمد حسين</strong> &copy; 2026</p>
-            <p>Batch 32 | المكتب الثقافي</p>
-        </div>
+        <p>تصميم خاص لـ نهال أحمد حسين &copy; 2026 - جميع الحقوق محفوظة لطلاب Batch 32</p>
     </footer>
 
+    <script>
+        // الـ 10 مقالات الطبية المنوعة
+        const posts = [
+            { title: "أخلاقيات مهنة الطب", content: "تعد الأخلاقيات حجر الزاوية في بناء الطبيب الناجح وعلاقته بالمريض.", tag: "تطوير مهني" },
+            { title: "مستقبل الذكاء الاصطناعي في الجراحة", content: "كيف ستساهم الروبوتات في تقليل الأخطاء البشرية خلال العمليات الدقيقة؟", tag: "تكنولوجيا طبية" },
+            { title: "إدارة الوقت لطلاب الكليات الطبية", content: "استراتيجيات عملية لموازنة المذاكرة الكثيفة مع الحياة الشخصية.", tag: "نصائح طلابية" },
+            { title: "أهمية الصحة النفسية للطبيب", content: "لا يمكن معالجة الآخرين إذا كان المعالج يعاني بصمت؛ ضرورة الدعم النفسي.", tag: "صحة نفسية" },
+            { title: "التطورات الحديثة في زراعة الأعضاء", content: "نظرة على نجاحات زراعة الأعضاء من مصادر غير بشرية (Xenotransplantation).", tag: "أبحاث" },
+            { title: "مقاومة المضادات الحيوية", content: "تحدي القرن الحادي عشر وكيف يمكننا كطلاب طب التوعية بمخاطره.", tag: "صحة عامة" },
+            { title: "التغذية العلاجية وأثرها", content: "كيف يساهم الغذاء المتوازن في تسريع عمليات الشفاء السريري.", tag: "طب وقائي" },
+            { title: "فن التواصل مع المريض", content: "مهارات الاستماع الفعال والتعاطف في التشخيص السليم.", tag: "مهارات" },
+            { title: "اللقاحات: بين العلم والشائعات", content: "تفنيد أهم الأكاذيب الشائعة حول اللقاحات بناءً على الأدلة العلمية.", tag: "مناعة" },
+            { title: "دور النوم في تعزيز الذاكرة", content: "لماذا يحتاج طالب الطب للنوم العميق لتثبيت المعلومات المعقدة؟", tag: "علم الأعصاب" }
+        ];
+
+        // وظيفة عرض المقالات
+        function loadPosts() {
+            const blogContainer = document.getElementById('blog-posts');
+            posts.forEach(post => {
+                const card = `
+                    <div class="post-card">
+                        <span class="post-tag">${post.tag}</span>
+                        <h3>${post.title}</h3>
+                        <p>${post.content}</p>
+                    </div>
+                `;
+                blogContainer.innerHTML += card;
+            });
+        }
+
+        // وظيفة التبديل بين الصفحات
+        function showPage(pageId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // تحميل المقالات عند فتح الموقع
+        window.onload = loadPosts;
+    </script>
 </body>
 </html>
