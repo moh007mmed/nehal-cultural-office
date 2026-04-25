@@ -3,61 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نهال أحمد حسين | الأمين الثقافي للدفعة 32</title>
+    <title>منصة Batch 32 الثقافية | نهال أحمد حسين</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
     <header>
         <div class="overlay">
             <nav>
-                <div class="logo">Batch 32</div>
+                <div class="logo">Batch 32 <span class="gold">Cultural</span></div>
                 <ul>
-                    <li><a href="#about">عن نهال</a></li>
-                    <li><a href="#vision">الرؤية الثقافية</a></li>
-                    <li><a href="#projects">النشاطات</a></li>
+                    <li><a href="#about">عن الأمين</a></li>
+                    <li><a href="#magazines">مجلات الدفعة</a></li>
+                    <li><a href="#gallery">إبداعات 32</a></li>
+                    <li><a href="#contact">تواصل معنا</a></li>
                 </ul>
             </nav>
-            <div class="hero-text">
+            <div class="hero-content">
+                <span class="badge">المنصة الرسمية للدفعة 32</span>
                 <h1>نهال أحمد حسين</h1>
-                <p>الأمين الثقافي للدفعة 32</p>
-                <div class="divider"></div>
-                <q>الثقافة هي الذاكرة الحية للجيل، ونحن هنا لنصنع الأثر.</q>
+                <p>قيادة ثقافية نحو مستقبل واعد</p>
+                <div class="main-buttons">
+                    <a href="#magazines" class="btn-primary">تصفح المجلات</a>
+                    <a href="#gallery" class="btn-secondary">معرض المواهب</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <section id="about" class="container">
-        <h2 class="section-title">نبذة تعريفية</h2>
-        <div class="content-box">
-            <p>بصفتها الأمين الثقافي للدفعة 32 (Batch 32)، تسعى <strong>نهال أحمد حسين</strong> إلى خلق بيئة إبداعية تجمع بين العلم والأدب والفن، وتعزز الروابط الثقافية بين أفراد الدفعة من خلال تنظيم الفعاليات والمبادرات التي تبرز المواهب الكامنة.</p>
+    <section class="stats-bar">
+        <div class="stat-item">
+            <i class="fas fa-book-open"></i>
+            <span>5+ إصدارات</span>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-users"></i>
+            <span>Batch 32 Family</span>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-lightbulb"></i>
+            <span>أفكار متجددة</span>
         </div>
     </section>
 
-    <section id="vision" class="bg-light">
+    <section id="magazines" class="container">
+        <h2 class="section-title">مجلات الدفعة 32</h2>
+        <p class="section-subtitle">إصدارات دورية توثق إبداعاتنا وأفكارنا</p>
+        
+        <div class="magazines-grid">
+            <div class="mag-card">
+                <div class="mag-thumb" style="background-image: url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=400&q=80')">
+                    <div class="mag-tag">الإصدار الأول</div>
+                </div>
+                <div class="mag-info">
+                    <h3>مجلة نبض الدفعة</h3>
+                    <p>مجلة شاملة تحتوي على مقالات أدبية، طبية، وترفيهية من إعداد طلاب الدفعة 32.</p>
+                    <a href="#" class="read-btn">تحميل PDF <i class="fas fa-download"></i></a>
+                </div>
+            </div>
+
+            <div class="mag-card">
+                <div class="mag-thumb" style="background-image: url('https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=400&q=80')">
+                    <div class="mag-tag">قريباً</div>
+                </div>
+                <div class="mag-info">
+                    <h3>أصداء ثقافية</h3>
+                    <p>زاوية خاصة لتسليط الضوء على المواهب المدفونة داخل Batch 32 تحت إشراف نهال أحمد.</p>
+                    <a href="#" class="read-btn disabled">انتظرونا..</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="bg-dark">
         <div class="container">
-            <h2 class="section-title">الرؤية والأهداف</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>الإبداع</h3>
-                    <p>فتح آفاق جديدة للمواهب الشابة داخل الدفعة ودعمها.</p>
-                </div>
-                <div class="card">
-                    <h3>التواصل</h3>
-                    <p>بناء جسور ثقافية تربط بين مختلف التوجهات الفكرية.</p>
-                </div>
-                <div class="card">
-                    <h3>التوثيق</h3>
-                    <p>أرشفة وتوثيق اللحظات الثقافية والإنجازات الخاصة بـ Batch 32.</p>
-                </div>
+            <h2 class="section-title light-text">معرض مواهب Batch 32</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=300&q=80" alt="رسم"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=300&q=80" alt="كتابة"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?auto=format&fit=crop&w=300&q=80" alt="تصوير"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1497015289639-546bb1ba0462?auto=format&fit=crop&w=300&q=80" alt="بودكاست"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <div class="about-flex">
+            <div class="about-text">
+                <h2 class="section-title right-align">كلمة نهال أحمد حسين</h2>
+                <p>طلاب دفعتي الأعزاء، Batch 32 ليس مجرد رقم، بل هو كيان ثقافي نابض بالحياة. بصفتي الأمين الثقافي، أعدكم بأن تظل هذه المنصة مساحة حرة لكل قلم مبدع، ولكل فكر نير يسعى لترك بصمة حقيقية في مسيرتنا الجامعية.</p>
+                <ul class="goals-list">
+                    <li><i class="fas fa-check-circle"></i> دعم المواهب الصاعدة.</li>
+                    <li><i class="fas fa-check-circle"></i> تنظيم مسابقات دورية.</li>
+                    <li><i class="fas fa-check-circle"></i> بناء مكتبة رقمية للدفعة.</li>
+                </ul>
+            </div>
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=500&q=80" alt="الثقافة">
             </div>
         </div>
     </section>
 
     <footer>
-        <p>تم تصميم هذا الموقع كهدية تقديرية لـ نهال أحمد حسين</p>
-        <p>&copy; 2026 جميع الحقوق محفوظة - Batch 32 Cultural Office</p>
+        <div class="footer-content">
+            <h3>Batch 32 Cultural Office</h3>
+            <p>بإشراف الأمين الثقافي: نهال أحمد حسين</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="dev-note">صُنع بكل حب لـ Batch 32</p>
+        </div>
     </footer>
 
 </body>
