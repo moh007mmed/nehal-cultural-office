@@ -14,19 +14,19 @@
         input, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; box-sizing: border-box; }
         button { background: #2c3e50; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; font-size: 1.1rem; margin-top: 25px; transition: 0.3s; }
         button:hover { background: #d4af37; color: #2c3e50; }
-        .status-msg { text-align: center; margin-top: 15px; font-weight: bold; }
+        #status { text-align: center; margin-top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="admin-box">
-        <h2>إضافة مقال طبي جديد 📝</h2>
+        <h2>إضافة مقال جديد للمدونة 📝</h2>
         
         <label>عنوان المقال</label>
-        <input type="text" id="title" placeholder="مثلاً: نصائح لصحة الفم">
+        <input type="text" id="title" placeholder="مثلاً: أخلاقيات مهنة طب الأسنان">
 
         <label>التصنيف</label>
-        <input type="text" id="category" placeholder="مثلاً: أخلاقيات / طب أسنان">
+        <input type="text" id="category" placeholder="مثلاً: أخلاقيات">
 
         <label>نبذة مختصرة</label>
         <textarea id="summary" placeholder="وصف قصير يظهر في قائمة المدونة" rows="2"></textarea>
@@ -35,16 +35,12 @@
         <textarea id="content" placeholder="اكتب المقال بالتفصيل هنا..." rows="10"></textarea>
 
         <button onclick="publishArticle()">نشر المقال الآن 🚀</button>
-        <div id="status" class="status-msg"></div>
+        <div id="status"></div>
     </div>
 
     <script>
-        // --- إعدادات الربط (انظر للصورة الثانية لديك) ---
-        
-        const SUPABASE_URL = 'https://mjyzihykduodmbicgsgg.supabase.co'; // الرابط الخاص بك
-        
-        // اذهب للصورة الثانية، انسخ الكود الطويل تحت "Publishable key" وضعه هنا
-        const SUPABASE_KEY = 'ضـع_كـود_الـ_Publishable_key_هـنـا'; 
+        const SUPABASE_URL = 'https://mjyzihykduodmbicgsgg.supabase.co'; 
+        const SUPABASE_KEY = 'sb_publishable_Ob-thmUfjYq8gs0ZwNT52A_JNUZMVEb'; 
 
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -73,8 +69,7 @@
                 statusDiv.innerText = "❌ خطأ: " + error.message;
             } else {
                 statusDiv.style.color = 'green';
-                statusDiv.innerText = "✅ تم النشر بنجاح! المقال الآن أونلاين.";
-                // مسح البيانات بعد النجاح
+                statusDiv.innerText = "✅ تم النشر بنجاح! المقال متاح الآن في قاعدة البيانات.";
                 document.querySelectorAll('input, textarea').forEach(el => el.value = '');
             }
         }
