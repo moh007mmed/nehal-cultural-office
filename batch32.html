@@ -2,42 +2,181 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batch 32 | عائلتنا الطبية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; font-family: 'Cairo', sans-serif; background: #fff; padding-top: 100px; }
-        nav { background: white; padding: 15px 10%; display: flex; justify-content: space-between; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        nav a { text-decoration: none; color: #5d4037; font-weight: bold; margin-left: 20px; }
-        
-        .batch-hero {
-            background: linear-gradient(rgba(45, 90, 39, 0.8), rgba(45, 90, 39, 0.8)), 
-                        url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1500&q=80');
-            background-size: cover; padding: 100px 10%; color: white; text-align: center;
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #d4af37; 
+            --bg-light: #f9f9f9;
         }
-        .info-box { max-width: 800px; margin: 40px auto; padding: 30px; border: 2px solid #2d5a27; border-radius: 20px; text-align: center; }
-        h1 { font-family: 'Amiri', serif; font-size: 3.5rem; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Header */
+        header {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            position: relative;
+            color: white;
+        }
+
+        .overlay {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 8%;
+            align-items: center;
+        }
+
+        nav ul { display: flex; list-style: none; }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        nav ul li a:hover { color: var(--accent-color); }
+
+        .hero-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-text h1 { font-size: 3.5rem; font-family: 'Amiri', serif; }
+        .divider { width: 80px; height: 4px; background: var(--accent-color); margin: 20px 0; }
+
+        /* Content Sections */
+        .container { padding: 80px 10%; }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-family: 'Amiri', serif;
+            color: var(--primary-color);
+        }
+
+        .batch-intro {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 50px;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-light);
+            padding: 40px;
+            text-align: center;
+            border-top: 5px solid var(--primary-color);
+            transition: 0.3s;
+        }
+        .feature-card:hover { border-top-color: var(--accent-color); transform: translateY(-5px); }
+        .feature-card h3 { font-family: 'Amiri', serif; font-size: 1.8rem; margin-bottom: 15px; }
+
+        .quote-box {
+            margin-top: 60px;
+            background: var(--primary-color);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .quote-box q { font-size: 1.5rem; font-style: italic; font-family: 'Amiri', serif; }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 2.5rem; }
+            nav { flex-direction: column; }
+            nav ul { margin-top: 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div style="font-family: 'Amiri'; font-size: 1.5rem;">نهال أحمد حسين</div>
-        <div>
-            <a href="index.html">الرئيسية</a>
-            <a href="blog.html">المقالات الطبية</a>
-            <a href="batch32.html">Batch 32</a>
+    <header>
+        <div class="overlay">
+            <nav>
+                <div class="logo" style="font-size: 1.5rem; font-weight: bold; font-family: 'Amiri', serif;">Batch 32</div>
+                <ul>
+                    <li><a href="index.html">عن نهال</a></li>
+                    <li><a href="blog.html">المقالات الطبية</a></li>
+                    <li><a href="batch32.html">Batch 32</a></li>
+                </ul>
+            </nav>
+            <div class="hero-text">
+                <h1>عائلة Batch 32</h1>
+                <div class="divider"></div>
+                <p>يداً بيد.. نحو مستقبل طبي مشرق</p>
+            </div>
         </div>
-    </nav>
+    </header>
 
-    <div class="batch-hero">
-        <h1>Batch 32</h1>
-        <p>الجيل الطموح والقلب الواحد</p>
-    </div>
+    <section class="container">
+        <h2 class="section-title">من نحن؟</h2>
+        <div class="batch-intro">
+            <p>نحن لسنا مجرد دفعة دراسية عابرة، بل نحن عائلة **Batch 32** التي تجمعها وحدة الهدف وشغف المعرفة. تحت مظلة الأمانة الثقافية وبإشراف نهال أحمد حسين، نسعى لأن نكون الجيل الذي يترك بصمة حقيقية في وجدان المجتمع الطبي السوداني.</p>
+        </div>
 
-    <div class="info-box">
-        <h2 style="font-family: 'Amiri'; color: #2d5a27;">رسالة الأمانة الثقافية</h2>
-        <p>إلى زملائي في Batch 32، نحن هنا لنبني مجتمعاً لا يكتفي بالدراسة فقط، بل يمتد أثره للثقافة والإبداع. هذه المنصة هي ملك لكم جميعاً، بإشراف نهال أحمد حسين، لنوثق نجاحاتنا وننشر المعرفة الطبية الصحيحة.</p>
-    </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>رؤيتنا</h3>
+                <p>أن نكون دفعة رائدة في الوعي الثقافي والتميز العلمي، ونموذجاً يحتذى به في التكافل والتعاون الأكاديمي.</p>
+            </div>
+            <div class="feature-card">
+                <h3>رسالتنا</h3>
+                <p>تفعيل الأنشطة الثقافية التي تنمي مواهب الزملاء، ونشر المعرفة الطبية الموثوقة لخدمة المجتمع والدفعة.</p>
+            </div>
+            <div class="feature-card">
+                <h3>قيمنا</h3>
+                <p>الأمانة العلمية، الابتكار في الطرح، والروح الجماعية التي لا تعرف المستحيل.</p>
+            </div>
+        </div>
+
+        <div class="quote-box">
+            <q>في Batch 32، نؤمن أن الطبيب المثقف هو الأقدر على ملامسة آلام الناس وشفائها.. أنتم فخر هذه المسيرة.</q>
+            <p style="margin-top: 15px; color: var(--accent-color); font-weight: bold;">— نهال أحمد حسين</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>تم تصميم هذا الموقع كهدية تقديرية لـ نهال أحمد حسين</p>
+        <p>&copy; 2026 جميع الحقوق محفوظة - Batch 32 Cultural Office</p>
+    </footer>
 
 </body>
 </html>
