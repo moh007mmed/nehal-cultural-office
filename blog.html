@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>المقالات الطبية | نهال أحمد حسين</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            margin: 0; 
+            font-family: 'Cairo', sans-serif; 
+            background: #f4f1ea url('https://www.transparenttextures.com/patterns/pinstriped-suit.png'); 
+            padding-top: 100px;
+        }
+        nav { background: white; padding: 15px 10%; display: flex; justify-content: space-between; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav a { text-decoration: none; color: #5d4037; font-weight: bold; margin-left: 20px; }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .header-title { text-align: center; font-family: 'Amiri', serif; font-size: 3rem; color: #2d5a27; margin-bottom: 40px; }
+        
+        .blog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .article-card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-bottom: 5px solid #2d5a27;
+        }
+        .article-card h3 { color: #5d4037; font-family: 'Amiri', serif; font-size: 1.6rem; }
+        .article-card p { color: #666; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="font-family: 'Amiri'; font-size: 1.5rem;">نهال أحمد حسين</div>
+        <div>
+            <a href="index.html">الرئيسية</a>
+            <a href="blog.html">المقالات الطبية</a>
+            <a href="batch32.html">Batch 32</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="header-title">المقالات الطبية المعتمدة</h1>
+        <div class="blog-grid" id="posts">
+            <div class="article-card"><h3>أخلاقيات مهنة الطب</h3><p>تعد الأخلاقيات حجر الزاوية في بناء الطبيب الناجح وعلاقته بالمريض.</p></div>
+            <div class="article-card"><h3>الذكاء الاصطناعي في الجراحة</h3><p>كيف تساهم الروبوتات في تقليل الأخطاء البشرية الدقيقة.</p></div>
+            <div class="article-card"><h3>إدارة الوقت للطبيب</h3><p>موازنة المذاكرة الكثيفة مع الحياة الشخصية والعملية.</p></div>
+            <div class="article-card"><h3>الصحة النفسية للطاقم الطبي</h3><p>لا يمكن معالجة الآخرين إذا كان المعالج يعاني بصمت.</p></div>
+            <div class="article-card"><h3>مقاومة المضادات الحيوية</h3><p>تحدي القرن الحادي عشر وكيفية التوعية بمخاطره.</p></div>
+            <div class="article-card"><h3>فن التواصل مع المريض</h3><p>مهارات الاستماع الفعال والتعاطف في التشخيص السليم.</p></div>
+            <div class="article-card"><h3>التغذية العلاجية</h3><p>كيف يساهم الغذاء المتوازن في تسريع الشفاء السريري.</p></div>
+            <div class="article-card"><h3>اللقاحات والأدلة العلمية</h3><p>تفنيد الشائعات بناءً على أحدث الدراسات العالمية.</p></div>
+            <div class="article-card"><h3>دور النوم في الذاكرة</h3><p>أهمية النوم العميق لتثبيت المعلومات الطبية المعقدة.</p></div>
+            <div class="article-card"><h3>مستقبل طب الأسنان</h3><p>التقنيات الرقمية وتأثيرها على جراحة الفم والأسنان.</p></div>
+        </div>
+    </div>
+
+</body>
+</html>
