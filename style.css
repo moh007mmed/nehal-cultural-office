@@ -1,155 +1,127 @@
 :root {
-    --primary-color: #2c3e50;
-    --accent-color: #d4af37; /* ذهبي ثقافي */
-    --text-light: #ecf0f1;
-    --bg-light: #f9f9f9;
+    --gold: #d4af37;
+    --dark: #1a1a1a;
+    --light: #f4f4f4;
+    --white: #ffffff;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Cairo', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #fff;
+    background-color: var(--white);
+    color: var(--dark);
+    line-height: 1.8;
 }
 
 /* Header & Hero */
 header {
     height: 100vh;
-    background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+    background: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1500&q=80') center/cover;
     position: relative;
-    color: white;
 }
 
 .overlay {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    color: white;
 }
 
 nav {
     display: flex;
     justify-content: space-between;
-    padding: 20px 8%;
-    align-items: center;
+    padding: 30px 8%;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-nav ul {
+.logo { font-size: 1.5rem; font-weight: bold; }
+.gold { color: var(--gold); }
+
+nav ul { display: flex; list-style: none; }
+nav ul li a { color: white; text-decoration: none; margin-right: 30px; transition: 0.3s; }
+nav ul li a:hover { color: var(--gold); }
+
+.hero-content {
+    text-align: center;
+    padding-top: 15vh;
+}
+
+.badge {
+    background: var(--gold);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: black;
+    font-weight: bold;
+}
+
+.hero-content h1 { font-size: 4.5rem; font-family: 'Amiri', serif; margin: 20px 0; }
+
+.main-buttons { margin-top: 30px; }
+.btn-primary { background: var(--gold); color: black; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 10px; display: inline-block; }
+.btn-secondary { border: 2px solid white; color: white; padding: 10px 30px; text-decoration: none; border-radius: 5px; margin: 10px; display: inline-block; }
+
+/* Stats Bar */
+.stats-bar {
     display: flex;
-    list-style: none;
-}
-
-nav ul li a {
+    justify-content: space-around;
+    background: var(--dark);
     color: white;
-    text-decoration: none;
-    margin-right: 20px;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-nav ul li a:hover {
-    color: var(--accent-color);
-}
-
-.hero-text {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 30px 0;
     text-align: center;
 }
 
-.hero-text h1 {
-    font-size: 4rem;
-    font-family: 'Amiri', serif;
-    margin-bottom: 10px;
-}
+/* Magazines Grid */
+.container { padding: 80px 8%; }
+.section-title { font-family: 'Amiri', serif; font-size: 2.8rem; text-align: center; margin-bottom: 10px; }
+.section-subtitle { text-align: center; color: #666; margin-bottom: 50px; }
 
-.hero-text p {
-    font-size: 1.5rem;
-    letter-spacing: 2px;
-}
-
-.divider {
-    width: 100px;
-    height: 4px;
-    background: var(--accent-color);
-    margin: 20px 0;
-}
-
-.hero-text q {
-    font-style: italic;
-    font-size: 1.2rem;
-    max-width: 600px;
-}
-
-/* Sections */
-.container {
-    padding: 80px 10%;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    position: relative;
-    font-family: 'Amiri', serif;
-}
-
-.bg-light {
-    background-color: var(--bg-light);
-}
-
-.content-box {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-    font-size: 1.2rem;
-}
-
-.grid {
+.magazines-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
 }
 
-.card {
+.mag-card {
     background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    text-align: center;
-    border-bottom: 4px solid var(--accent-color);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
 }
 
-.card h3 {
-    margin-bottom: 15px;
-    color: var(--primary-color);
-}
+.mag-card:hover { transform: translateY(-10px); }
+
+.mag-thumb { height: 250px; background-size: cover; position: relative; }
+.mag-tag { background: var(--gold); position: absolute; top: 10px; right: 10px; padding: 5px 15px; font-size: 0.8rem; border-radius: 5px; }
+
+.mag-info { padding: 25px; }
+.read-btn { display: inline-block; margin-top: 15px; color: var(--gold); text-decoration: none; font-weight: bold; }
+
+/* Gallery */
+.bg-dark { background: #111; color: white; }
+.light-text { color: white; }
+.gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 30px; }
+.gallery-item img { width: 100%; border-radius: 10px; filter: grayscale(50%); transition: 0.5s; }
+.gallery-item img:hover { filter: grayscale(0%); transform: scale(1.05); }
+
+/* About Section */
+.about-flex { display: flex; align-items: center; gap: 50px; }
+.about-img img { width: 100%; border-radius: 20px; box-shadow: 20px 20px 0 var(--gold); }
+.goals-list { list-style: none; margin-top: 20px; }
+.goals-list li { margin-bottom: 10px; font-weight: bold; }
+.goals-list i { color: var(--gold); margin-left: 10px; }
 
 /* Footer */
-footer {
-    background: var(--primary-color);
-    color: white;
-    text-align: center;
-    padding: 40px 0;
-}
+footer { background: var(--dark); color: white; padding: 60px 0; text-align: center; }
+.social-links { margin: 20px 0; font-size: 1.5rem; }
+.social-links a { color: white; margin: 0 15px; transition: 0.3s; }
+.social-links a:hover { color: var(--gold); }
+.dev-note { font-size: 0.8rem; opacity: 0.6; margin-top: 20px; }
 
-footer p {
-    margin-bottom: 10px;
-    font-size: 0.9rem;
-}
-
-/* Responsiveness */
+/* Mobile */
 @media (max-width: 768px) {
-    .hero-text h1 { font-size: 2.5rem; }
-    nav { flex-direction: column; }
-    nav ul { margin-top: 20px; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .about-flex { flex-direction: column; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 }
