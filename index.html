@@ -2,66 +2,219 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>نهال أحمد حسين | الرئيسية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نهال أحمد حسين | الأمين الثقافي للدفعة 32</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        :root { --main-color: #2d5a27; --wood: #5d4037; }
-        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Cairo', sans-serif; }
-        
-        /* Navigation Bar Shared */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #d4af37; /* ذهبي ثقافي */
+            --text-light: #ecf0f1;
+            --bg-light: #f9f9f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Header & Hero */
+        header {
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            position: relative;
+            color: white;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.6);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
         nav {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px 10%;
             display: flex;
             justify-content: space-between;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        nav a { text-decoration: none; color: var(--wood); font-weight: bold; margin-left: 20px; transition: 0.3s; }
-        nav a:hover { color: var(--main-color); }
-
-        /* Hero Section with Background */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), 
-                        url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1500&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex;
+            padding: 20px 8%;
             align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .hero-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
             text-align: center;
         }
-        .content { max-width: 800px; padding: 20px; background: rgba(255,255,255,0.8); border-radius: 15px; }
-        h1 { font-family: 'Amiri', serif; font-size: 4rem; color: var(--wood); margin: 0; }
-        p { font-size: 1.3rem; color: #444; line-height: 1.6; }
-        .btn { display: inline-block; padding: 12px 30px; background: var(--main-color); color: white; text-decoration: none; border-radius: 5px; margin-top: 20px; }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-family: 'Amiri', serif;
+            margin-bottom: 10px;
+        }
+
+        .hero-text p {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            width: 100px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 20px 0;
+        }
+
+        .hero-text q {
+            font-style: italic;
+            font-size: 1.2rem;
+            max-width: 600px;
+        }
+
+        /* Sections */
+        .container {
+            padding: 80px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+            font-family: 'Amiri', serif;
+        }
+
+        .bg-light {
+            background-color: var(--bg-light);
+        }
+
+        .content-box {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 2.5rem; }
+            nav { flex-direction: column; }
+            nav ul { margin-top: 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div style="font-family: 'Amiri'; font-size: 1.5rem;">Batch 32 Cultural</div>
-        <div>
-            <a href="index.html">الرئيسية</a>
-            <a href="blog.html">المقالات الطبية</a>
-            <a href="batch32.html">Batch 32</a>
+    <header>
+        <div class="overlay">
+            <nav>
+                <div class="logo" style="font-size: 1.5rem; font-weight: bold; font-family: 'Amiri', serif;">Batch 32</div>
+                <ul>
+                    <li><a href="index.html">عن نهال</a></li>
+                    <li><a href="blog.html">المقالات الطبية</a></li>
+                    <li><a href="batch32.html">Batch 32</a></li>
+                </ul>
+            </nav>
+            <div class="hero-text">
+                <h1>نهال أحمد حسين</h1>
+                <p>الأمين الثقافي للدفعة 32</p>
+                <div class="divider"></div>
+                <q>الثقافة هي الذاكرة الحية للجيل، ونحن هنا لنصنع الأثر.</q>
+            </div>
         </div>
-    </nav>
+    </header>
 
-    <div class="hero">
-        <div class="content">
-            <h1>نهال أحمد حسين</h1>
-            <p>الأمين الثقافي للدفعة 32</p>
-            <hr style="width: 50px; border: 2px solid var(--main-color); margin: 20px auto;">
-            <p>مرحباً بكم في منصتي الثقافية. هنا ندمج شغف الطب بروح المعرفة، لنبني معاً وعياً صحياً يليق بدفعتنا المتميزة. أدعوكم لاستكشاف المقالات الطبية التي أعددتها لكم.</p>
-            <a href="blog.html" class="btn">تصفح المقالات الطبية</a>
+    <section id="about" class="container">
+        <h2 class="section-title">نبذة تعريفية</h2>
+        <div class="content-box">
+            <p>بصفتها الأمين الثقافي للدفعة 32 (Batch 32)، تسعى <strong>نهال أحمد حسين</strong> إلى خلق بيئة إبداعية تجمع بين العلم والأدب والفن، وتعزز الروابط الثقافية بين أفراد الدفعة من خلال تنظيم الفعاليات والمبادرات التي تبرز المواهب الكامنة وتدعم مسيرتنا الطبية المتميزة.</p>
         </div>
-    </div>
+    </section>
+
+    <section id="vision" class="bg-light">
+        <div class="container">
+            <h2 class="section-title">الرؤية والأهداف</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>الإبداع</h3>
+                    <p>فتح آفاق جديدة للمواهب الشابة داخل الدفعة ودعمها.</p>
+                </div>
+                <div class="card">
+                    <h3>التواصل</h3>
+                    <p>بناء جسور ثقافية تربط بين مختلف التوجهات الفكرية.</p>
+                </div>
+                <div class="card">
+                    <h3>التوثيق</h3>
+                    <p>أرشفة وتوثيق اللحظات الثقافية والإنجازات الخاصة بـ Batch 32.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>تم تصميم هذا الموقع كهدية تقديرية لـ نهال أحمد حسين</p>
+        <p>&copy; 2026 جميع الحقوق محفوظة - Batch 32 Cultural Office</p>
+    </footer>
 
 </body>
 </html>
