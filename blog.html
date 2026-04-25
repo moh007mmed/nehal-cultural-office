@@ -3,239 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المقالات الطبية | نهال أحمد حسين</title>
+    <title>المدونة الطبية | نهال أحمد حسين</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #2c3e50;
             --accent-color: #d4af37; 
-            --text-light: #ecf0f1;
             --bg-light: #f9f9f9;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; line-height: 1.8; color: #333; background-color: #fff; }
 
-        body {
-            font-family: 'Cairo', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #fff;
-        }
+        /* Navigation */
+        nav { display: flex; justify-content: space-between; padding: 20px 8%; align-items: center; background: var(--primary-color); color: white; }
+        nav ul { display: flex; list-style: none; }
+        nav ul li a { color: white; text-decoration: none; margin-right: 20px; font-weight: 600; }
+        nav ul li a:hover { color: var(--accent-color); }
 
         /* Header */
-        header {
-            height: 60vh;
-            background: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            position: relative;
+        .blog-header {
+            padding: 60px 10%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
             color: white;
-        }
-
-        .overlay {
-            background: rgba(0, 0, 0, 0.7);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px 8%;
-            align-items: center;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            margin-right: 20px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: var(--accent-color);
-        }
-
-        .hero-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             text-align: center;
         }
 
-        .hero-text h1 {
-            font-size: 3.5rem;
-            font-family: 'Amiri', serif;
-            margin-bottom: 10px;
-        }
+        .container { padding: 50px 10%; max-width: 1200px; margin: 0 auto; }
 
-        .divider {
-            width: 80px;
-            height: 4px;
-            background: var(--accent-color);
-            margin: 20px 0;
-        }
-
-        /* Sections */
-        .container {
-            padding: 80px 10%;
-        }
-
-        .bg-light {
-            background-color: var(--bg-light);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
+        /* Grid View */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
         .card {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            text-align: center;
-            border-bottom: 4px solid var(--accent-color);
-            transition: transform 0.3s ease;
+            background: white; padding: 25px; border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 4px solid var(--accent-color);
+            cursor: pointer; transition: 0.3s;
         }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 { font-family: 'Amiri', serif; color: var(--primary-color); margin-bottom: 10px; }
+        .btn-read { color: var(--accent-color); font-weight: bold; cursor: pointer; display: inline-block; margin-top: 10px; }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
+        /* Article Reader View (Hidden by default) */
+        #article-reader { display: none; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.1); }
+        .back-btn { background: var(--primary-color); color: white; padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px; }
+        .full-content { font-size: 1.15rem; color: #444; text-align: justify; }
+        .full-content h2 { font-family: 'Amiri', serif; color: var(--primary-color); margin-bottom: 20px; font-size: 2.2rem; }
 
-        .card h3 {
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            font-family: 'Amiri', serif;
-            font-size: 1.4rem;
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            color: #666;
-        }
-
-        .tag {
-            color: var(--accent-color);
-            font-size: 0.85rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        footer p {
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-
-        /* Responsiveness */
-        @media (max-width: 768px) {
-            .hero-text h1 { font-size: 2.5rem; }
-            nav { flex-direction: column; }
-            nav ul { margin-top: 20px; }
-        }
+        footer { background: var(--primary-color); color: white; text-align: center; padding: 30px 0; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="overlay">
-            <nav>
-                <div class="logo" style="font-size: 1.5rem; font-weight: bold; font-family: 'Amiri', serif;">Batch 32</div>
-                <ul>
-                    <li><a href="index.html">عن نهال</a></li>
-                    <li><a href="blog.html">المقالات الطبية</a></li>
-                    <li><a href="batch32.html">Batch 32</a></li>
-                </ul>
-            </nav>
-            <div class="hero-text">
-                <h1>المدونة الطبية</h1>
-                <div class="divider"></div>
-                <p>محتوى علمي موثوق بإشراف نهال أحمد حسين</p>
-            </div>
-        </div>
-    </header>
+    <nav>
+        <div style="font-family: 'Amiri'; font-size: 1.5rem;">Batch 32</div>
+        <ul>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="blog.html">المقالات</a></li>
+            <li><a href="batch32.html">Batch 32</a></li>
+        </ul>
+    </nav>
 
-    <section class="bg-light container">
-        <div class="grid">
-            <div class="card">
-                <span class="tag">أخلاقيات</span>
-                <h3>رسالة الطبيب السامية</h3>
-                <p>استعراض لأهم القيم الأخلاقية التي يجب أن يتحلى بها طالب الطب وعلاقة ذلك ببناء الثقة مع المريض.</p>
+    <div class="blog-header" id="header-area">
+        <h1 style="font-family: 'Amiri', serif; font-size: 3rem;">المدونة الطبية الثقافية</h1>
+        <p>بإشراف الأمين الثقافي: نهال أحمد حسين</p>
+    </div>
+
+    <div class="container">
+        <div id="blog-grid" class="grid">
             </div>
-            <div class="card">
-                <span class="tag">تكنولوجيا</span>
-                <h3>الذكاء الاصطناعي في الجراحة</h3>
-                <p>دراسة مبسطة حول كيفية تغيير الخوارزميات لمستقبل التشخيص السريري والتدخلات الجراحية الدقيقة.</p>
-            </div>
-            <div class="card">
-                <span class="tag">صحة نفسية</span>
-                <h3>إدارة الضغوط الأكاديمية</h3>
-                <p>استراتيجيات عملية للتعامل مع كثافة المنهج الطبي وتجنب الاحتراق النفسي خلال سنوات الدراسة.</p>
-            </div>
-            <div class="card">
-                <span class="tag">صحة عامة</span>
-                <h3>مقاومة المضادات الحيوية</h3>
-                <p>نظرة على خطر الاستخدام العشوائي للمضادات الحيوية وأهمية دور الكوادر الطبية في توعية المجتمع.</p>
-            </div>
-            <div class="card">
-                <span class="tag">مهارات</span>
-                <h3>فن التواصل مع المريض</h3>
-                <p>تحليل لأهمية الاستماع الفعال والتعاطف، وكيف يعتبر التواصل الجيد نصف الطريق نحو التشخيص الناجح.</p>
-            </div>
-            <div class="card">
-                <span class="tag">طب وقائي</span>
-                <h3>التغذية والتحصيل الدراسي</h3>
-                <p>العلاقة الوثيقة بين الغذاء المتوازن وتعزيز قدرات الذاكرة والتركيز، خاصة خلال فترات الامتحانات.</p>
-            </div>
-            <div class="card">
-                <span class="tag">مناعة</span>
-                <h3>اللقاحات والأدلة العلمية</h3>
-                <p>قراءة في تاريخ اللقاحات وأثرها الجذري في استئصال الأمراض الفتاكة بناءً على أحدث الأبحاث المعتمدة.</p>
-            </div>
-            <div class="card">
-                <span class="tag">علم الأعصاب</span>
-                <h3>فسيولوجيا النوم والتعلم</h3>
-                <p>توضيح لكيفية قيام الدماغ بترتيب المعلومات الطبية المعقدة وتثبيتها في الذاكرة خلال ساعات النوم العميق.</p>
-            </div>
-            <div class="card">
-                <span class="tag">طوارئ</span>
-                <h3>الإسعافات الأولية للجميع</h3>
-                <p>دليل مختصر يوضح أهم الخطوات والإجراءات الفورية اللازمة لإنقاذ الأرواح في الحالات الطارئة.</p>
-            </div>
-            <div class="card">
-                <span class="tag">مستقبل الطب</span>
-                <h3>الطب الرقمي وتطوره</h3>
-                <p>كيفية تحول السجلات الطبية إلى أنظمة ذكية مترابطة تخدم مسار علاج المريض بكفاءة أعلى وسرعة أكبر.</p>
-            </div>
+
+        <div id="article-reader">
+            <button class="back-btn" onclick="closeArticle()">← العودة للمقالات</button>
+            <div id="article-content" class="full-content">
+                </div>
         </div>
-    </section>
+    </div>
 
     <footer>
-        <p>يمتلك حقوق هذا الموقع نهال أحمد حسين</p>
-        <p>&copy; 2026 جميع الحقوق محفوظة - Batch 32 Cultural Office</p>
+        <p>&copy; 2026 جميع الحقوق محفوظة - منصة نهال أحمد حسين الثقافية</p>
     </footer>
 
+    <script>
+        // بيانات المقالات الـ 10 الحقيقية
+        const articles = [
+            {
+                id: 1,
+                title: "أخلاقيات مهنة الطب: ميثاق الشرف",
+                summary: "تعد الأخلاقيات حجر الزاوية في بناء الطبيب الناجح وعلاقته بالمريض.",
+                content: "<h2>أخلاقيات مهنة الطب</h2><p>إن مهنة الطب ليست مجرد وظيفة، بل هي رسالة إنسانية سامية. تبدأ الأخلاقيات من احترام خصوصية المريض (Patient Confidentiality) وصولاً إلى الصدق في التشخيص. في دفعتنا Batch 32، نؤمن أن الطبيب المثقف هو من يسبق علمه أدبه، حيث يمثل العطف والتعاطف نصف العلاج النفسي للمريض قبل البدء بالعلاج السريري.</p>"
+            },
+            {
+                id: 2,
+                title: "الذكاء الاصطناعي في جراحة الفم",
+                summary: "دراسة مبسطة حول كيفية تغيير الخوارزميات لمستقبل الطب.",
+                content: "<h2>الذكاء الاصطناعي في الطب</h2><p>نشهد اليوم ثورة تقنية كبرى؛ حيث تساعد خوارزميات الذكاء الاصطناعي في تحليل صور الأشعة بدقة تفوق البشر أحياناً. بالنسبة لنا كطلاب طب، يجب أن نكون مستعدين للتعامل مع هذه التقنيات كأدوات مساعدة تساعدنا في التشخيص المبكر للأمراض وتقليل نسبة الخطأ البشري في العمليات الدقيقة.</p>"
+            },
+            {
+                id: 3,
+                title: "إدارة ضغوط الامتحانات الطبية",
+                summary: "استراتيجيات عملية للتعامل مع كثافة المنهج وتجنب الاحتراق النفسي.",
+                content: "<h2>إدارة الضغوط</h2><p>يعاني طالب الطب من ضغوط هائلة بسبب حجم المادة العلمية. السر يكمن في 'تقنية البومودورو' وتنظيم الوقت، والأهم من ذلك هو أخذ فترات راحة كافية. نهال أحمد حسين تنصح الزملاء دائماً بأن الصحة النفسية هي المحرك الأساسي للاستمرار والنجاح في هذا الطريق الطويل.</p>"
+            },
+            {
+                id: 4,
+                title: "خطر مقاومة المضادات الحيوية",
+                summary: "لماذا يجب أن نحذر من الاستخدام العشوائي للمضادات؟",
+                content: "<h2>المضادات الحيوية</h2><p>العالم يواجه أزمة 'البكتيريا الخارقة'. الاستخدام غير المنظم للمضادات الحيوية يجعلها غير فعالة بمرور الوقت. دورنا ككوادر طبية هو توعية المجتمع السوداني بأن المضاد الحيوي لا يعالج الالتهابات الفيروسية، وأن الالتزام بالجرعة كاملة هو أمر لا تهاون فيه.</p>"
+            },
+            {
+                id: 5,
+                title: "مهارات التواصل الطبي الفعال",
+                summary: "لماذا يعتبر الاستماع للمريض نصف الطريق نحو التشخيص؟",
+                content: "<h2>فن التواصل</h2><p>التواصل الجيد (Communication Skills) هو الفرق بين الطبيب الناجح والطبيب المتميز. المريض غالباً ما يحمل معه مخاوفه وليس فقط أوجاعه؛ الاستماع الفعال يجعلك تصل لتشخيص أدق ويبني جسر ثقة متين يسهل عملية الالتزام بالعلاج.</p>"
+            },
+            {
+                id: 6,
+                title: "أهمية التغذية في التحصيل العلمي",
+                summary: "العلاقة بين الغذاء المتوازن وتعزيز قدرات الذاكرة.",
+                content: "<h2>التغذية والذكاء</h2><p>العقل السليم في الجسم السليم. الأغذية الغنية بـ Omega-3 والزنك وفيتامين B12 ضرورية جداً لطلاب الطب لزيادة التركيز. الوجبات السريعة قد تعطي طاقة لحظية لكنها تسبب الخمول الدراسي لاحقاً.</p>"
+            },
+            {
+                id: 7,
+                title: "تاريخ اللقاحات وأثرها العالمي",
+                summary: "قراءة في تاريخ اللقاحات وأثرها الجذري في استئصال الأمراض.",
+                content: "<h2>ثورة اللقاحات</h2><p>منذ اكتشاف لقاح الجدري وحتى يومنا هذا، أنقذت اللقاحات مليارات الأرواح. كطلاب في Batch 32، يجب أن نكون خط الدفاع الأول ضد الشائعات الطبية، وننشر الوعي المبني على الأدلة العلمية والبراهين (Evidence-based Medicine).</p>"
+            },
+            {
+                id: 8,
+                title: "فسيولوجيا النوم للطلاب",
+                summary: "كيف يقوم الدماغ بترتيب المعلومات خلال ساعات النوم؟",
+                content: "<h2>أهمية النوم</h2><p>الدماغ لا يرتاح أثناء النوم بل يقوم بعملية 'أرشفة'. السهر الطويل قبل الامتحانات يدمر الذاكرة قصيرة المدى. الحصول على 7 ساعات من النوم العميق هو ما يثبت المعلومات الطبية المعقدة التي ندرسها طوال النهار.</p>"
+            },
+            {
+                id: 9,
+                title: "الإسعافات الأولية المنقذة للحياة",
+                summary: "دليل مختصر حول أهم الإجراءات الفورية في الطوارئ.",
+                content: "<h2>الإسعافات الأولية</h2><p>كل فرد في المجتمع يجب أن يعرف مبادئ CPR والتعامل مع الغصة والجروح النزفية. كطلاب طب، نحن مطالبون بتقديم يد العون في أي مكان، فالمعرفة التي نملكها قد تكون هي الفارق بين الحياة والموت في لحظة حرجة.</p>"
+            },
+            {
+                id: 10,
+                title: "مستقبل طب الأسنان الرقمي",
+                summary: "التحول من الطرق التقليدية إلى الرقمنة والطباعة ثلاثية الأبعاد.",
+                content: "<h2>طب الأسنان الرقمي</h2><p>بما أننا في كليتنا نركز على التميز، فإن مستقبل تخصصنا يتجه نحو الماسحات الضوئية (Intraoral Scanners) والطباعة ثلاثية الأبعاد للتركيبات. هذا يختصر الوقت ويزيد الدقة، ويجعل تجربة المريض أكثر راحة.</p>"
+            }
+        ];
+
+        // وظيفة عرض الشبكة (Grid)
+        function renderGrid() {
+            const grid = document.getElementById('blog-grid');
+            grid.innerHTML = articles.map(art => `
+                <div class="card" onclick="openArticle(${art.id})">
+                    <span style="color:var(--accent-color); font-size:0.8rem; font-weight:bold;">مقال طبي</span>
+                    <h3>${art.title}</h3>
+                    <p>${art.summary}</p>
+                    <span class="btn-read">اقرأ المقال كاملاً ←</span>
+                </div>
+            `).join('');
+        }
+
+        // وظيفة فتح المقال
+        function openArticle(id) {
+            const article = articles.find(a => a.id === id);
+            document.getElementById('blog-grid').style.display = 'none';
+            document.getElementById('header-area').style.display = 'none';
+            document.getElementById('article-reader').style.display = 'block';
+            document.getElementById('article-content').innerHTML = article.content;
+            window.scrollTo(0,0);
+        }
+
+        // وظيفة الإغلاق والعودة
+        function closeArticle() {
+            document.getElementById('blog-grid').style.display = 'grid';
+            document.getElementById('header-area').style.display = 'block';
+            document.getElementById('article-reader').style.display = 'none';
+        }
+
+        // تشغيل الوظيفة عند التحميل
+        window.onload = renderGrid;
+    </script>
 </body>
 </html>
