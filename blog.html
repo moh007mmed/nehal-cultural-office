@@ -3,345 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المقالات الثقافية | نهال أحمد حسين</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;600&display=swap" rel="stylesheet">
+    <title>المقالات | نهال أحمد حسين</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #d4af37;
-            --text-light: #ecf0f1;
-            --bg-light: #f9f9f9;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-light);
-            color: #333;
-        }
-
-        /* Navigation (نفس الصفحة الرئيسية) */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px 8%;
-            align-items: center;
-            background: var(--primary-color);
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
+        :root { --primary: #2c3e50; --accent: #d4af37; --bg: #f9f9f9; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        
+        /* Navigation */
+        nav { display: flex; justify-content: space-between; padding: 20px 8%; align-items: center; background: var(--primary); color: white; }
         nav ul { display: flex; list-style: none; }
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            margin-right: 20px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        nav ul li a:hover { color: var(--accent-color); }
+        nav ul li a { color: white; text-decoration: none; margin-right: 20px; font-weight: bold; }
 
-        /* Blog Header */
-        .blog-hero {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 100px 10%;
-        }
+        .header-blog { text-align: center; padding: 60px 20px; background: white; border-bottom: 2px solid #eee; }
+        .header-blog h1 { font-family: 'Amiri', serif; font-size: 3rem; color: var(--primary); }
 
-        .blog-hero h1 { font-family: 'Amiri', serif; font-size: 3.5rem; margin-bottom: 10px; }
-        .divider { width: 80px; height: 4px; background: var(--accent-color); margin: 20px auto; }
-
-        /* Articles Grid */
-        .container { padding: 60px 8%; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .article-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            border-bottom: 4px solid transparent;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .article-card:hover {
-            transform: translateY(-10px);
-            border-bottom: 4px solid var(--accent-color);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: #eee;
-        }
-
-        .card-body { padding: 25px; flex-grow: 1; }
-        .category-tag {
-            background: #fdf6e3;
-            color: var(--accent-color);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        .card-body h3 {
-            font-family: 'Amiri', serif;
-            font-size: 1.6rem;
-            margin-bottom: 12px;
-            color: var(--primary-color);
-        }
-
-        .card-body p { color: #666; font-size: 0.95rem; margin-bottom: 20px; }
-
-        .card-footer {
-            padding: 15px 25px;
-            border-top: 1px solid #f0f0f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .like-btn {
-            background: none;
-            border: 1px solid #eee;
-            padding: 6px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Cairo';
-        }
-
-        .like-btn.active {
-            background: #fff0f0;
-            border-color: #ff4757;
-            color: #ff4757;
-        }
-
-        .read-more {
-            color: var(--primary-color);
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* Modal (نافذة عرض المقال) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            overflow-y: auto;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: white;
-            max-width: 900px;
-            margin: 50px auto;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            animation: slideUp 0.4s ease;
-        }
-
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        .modal-img { width: 100%; height: 400px; object-fit: cover; }
-        .modal-body { padding: 50px; }
-        .modal-body h2 { font-family: 'Amiri', serif; font-size: 2.8rem; margin-bottom: 20px; color: var(--primary-color); }
-        .modal-text { line-height: 2; font-size: 1.2rem; white-space: pre-wrap; color: #444; }
-
-        .close-btn {
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            font-size: 30px;
-            background: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 10;
-        }
-
-        footer {
-            background: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 40px 0;
-            margin-top: 50px;
-        }
-
-        /* Responsiveness */
-        @media (max-width: 768px) {
-            .blog-hero h1 { font-size: 2.5rem; }
-            nav { flex-direction: column; padding: 15px; }
-            nav ul { margin-top: 15px; }
-            .modal-content { margin: 10px; }
-            .modal-body { padding: 25px; }
-        }
+        .container { padding: 40px 8%; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        
+        /* Card Style */
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; background: #eee; }
+        .card-body { padding: 20px; }
+        .card-category { color: var(--accent); font-weight: bold; font-size: 0.8rem; }
+        .card-title { font-family: 'Amiri', serif; font-size: 1.5rem; margin: 10px 0; color: var(--primary); }
+        .card-text { color: #666; font-size: 0.9rem; line-height: 1.6; }
+        .card-footer { padding: 15px 20px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        
+        .btn-read { cursor: pointer; color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo" style="font-size: 1.5rem; font-weight: bold; font-family: 'Amiri', serif;">Batch 32</div>
+        <div class="logo" style="font-family: 'Amiri', serif; font-size: 1.5rem;">Batch 32</div>
         <ul>
-            <li><a href="index.html">عن نهال</a></li>
-            <li><a href="blog.html" style="color: var(--accent-color);">المقالات الطبية</a></li>
-            <li><a href="batch32.html">Batch 32</a></li>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="blog.html" style="color: var(--accent)">المقالات</a></li>
         </ul>
     </nav>
 
-    <header class="blog-hero">
-        <div class="hero-content">
-            <h1>مدونة نهال الثقافية</h1>
-            <div class="divider"></div>
-            <p>مقالات، أفكار، وإضاءات من قلب الدفعة 32</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <div id="blog-grid" class="grid">
-            <p style="text-align: center; grid-column: 1/-1;">جاري جلب أحدث المقالات من المكتبة...</p>
-        </div>
-    </main>
-
-    <div id="articleModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modal-content-area"></div>
-        </div>
+    <div class="header-blog">
+        <h1>المقالات الطبية والثقافية</h1>
+        <p>مساحة للفكر والمعرفة بقلم نهال أحمد حسين</p>
     </div>
 
-    <footer>
-        <p>يمتلك حقوق هذا الموقع نهال أحمد حسين</p>
-        <p>&copy; 2026 جميع الحقوق محفوظة - Batch 32 Cultural Office</p>
-    </footer>
+    <div class="container" id="blog-grid">
+        </div>
 
     <script>
         const SUPABASE_URL = 'https://mjyzihykduodmbicgsgg.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_Ob-thmUfjYq8gs0ZwNT52A_JNUZMVEb'; // تأكد من أن هذا هو المفتاح الصحيح
+        const SUPABASE_KEY = 'YOUR_SUPABASE_KEY_HERE'; // ضع مفتاحك هنا
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function loadBlog() {
+        async function loadArticles() {
             const { data: articles, error } = await _supabase
                 .from('articles')
                 .select('*')
                 .order('id', { ascending: false });
 
             if (error) {
-                console.error('Error:', error);
+                console.error(error);
                 return;
             }
 
             const grid = document.getElementById('blog-grid');
-            const likedList = JSON.parse(localStorage.getItem('liked_arts') || '[]');
-
-            grid.innerHTML = articles.map(art => {
-                const isLiked = likedList.includes(art.id);
-                // استخدام صورة افتراضية في حال عدم وجود رابط
-                const imgSrc = art.image_url || 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=500&q=60';
-                
-                return `
-                <div class="article-card">
-                    <img src="${imgSrc}" class="card-img" alt="${art.title}">
+            grid.innerHTML = articles.map(art => `
+                <div class="card">
+                    <img src="${art.image_url || 'https://via.placeholder.com/400x200?text=No+Image'}" alt="${art.title}">
                     <div class="card-body">
-                        <span class="category-tag">${art.category}</span>
-                        <h3>${art.title}</h3>
-                        <p>${art.summary}</p>
+                        <span class="card-category">${art.category}</span>
+                        <h3 class="card-title">${art.title}</h3>
+                        <p class="card-text">${art.summary}</p>
                     </div>
                     <div class="card-footer">
-                        <button id="btn-${art.id}" class="like-btn ${isLiked ? 'active' : ''}" onclick="toggleLike(${art.id}, ${art.likes || 0})">
-                            ❤️ <span id="count-${art.id}">${art.likes || 0}</span>
-                        </button>
-                        <span class="read-more" onclick='openModal(${JSON.stringify(art).replace(/'/g, "&apos;")})'>اقرأ المقال ←</span>
+                        <span class="btn-read" onclick="alert('سيتم عرض المقال الكامل قريباً')">اقرأ المزيد ←</span>
+                        <span>❤️ ${art.likes || 0}</span>
                     </div>
                 </div>
-            `}).join('');
+            `).join('');
         }
 
-        async function toggleLike(id, currentLikes) {
-            let likedList = JSON.parse(localStorage.getItem('liked_arts') || '[]');
-            const btn = document.getElementById(`btn-${id}`);
-            const countSpan = document.getElementById(`count-${id}`);
-            let newLikes = currentLikes;
-
-            if (likedList.includes(id)) {
-                newLikes = currentLikes - 1;
-                likedList = likedList.filter(item => item !== id);
-                btn.classList.remove('active');
-            } else {
-                newLikes = currentLikes + 1;
-                likedList.push(id);
-                btn.classList.add('active');
-            }
-
-            localStorage.setItem('liked_arts', JSON.stringify(likedList));
-            countSpan.innerText = newLikes;
-            
-            // تحديث قاعدة البيانات بصمت
-            await _supabase.from('articles').update({ likes: newLikes }).eq('id', id);
-        }
-
-        function openModal(art) {
-            const modal = document.getElementById('articleModal');
-            const area = document.getElementById('modal-content-area');
-            const imgSrc = art.image_url || 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=500&q=60';
-
-            area.innerHTML = `
-                <img src="${imgSrc}" class="modal-img">
-                <div class="modal-body">
-                    <span class="category-tag">${art.category}</span>
-                    <h2>${art.title}</h2>
-                    <div class="modal-text">${art.content}</div>
-                </div>
-            `;
-            modal.style.display = "block";
-            document.body.style.overflow = "hidden";
-        }
-
-        function closeModal() {
-            document.getElementById('articleModal').style.display = "none";
-            document.body.style.overflow = "auto";
-        }
-
-        // إغلاق النافذة عند الضغط خارجها
-        window.onclick = function(event) {
-            const modal = document.getElementById('articleModal');
-            if (event.target == modal) closeModal();
-        }
-
-        window.onload = loadBlog;
+        window.onload = loadArticles;
     </script>
 </body>
 </html>
