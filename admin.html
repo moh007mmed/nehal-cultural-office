@@ -3,80 +3,439 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | Batch 32</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>لوحة الإدارة | المقالات الطبية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #f4f7f6; padding: 20px; }
-        .admin-container { max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 25px; }
-        label { font-weight: bold; color: #555; display: block; margin-top: 10px; }
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #d4af37; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold; margin-top: 20px; transition: 0.3s; }
-        button:hover { background: #b8952d; }
-        #status { margin-top: 15px; text-align: center; font-weight: bold; }
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #d4af37;
+            --bg-light: #f4f7f6;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        /* Dashboard Container */
+        .container {
+            padding: 40px 5%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Analytics & Actions Row */
+        .top-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-right: 5px solid var(--accent-color);
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-card span { font-size: 1.2rem; color: #777; }
+        .stat-card strong { font-size: 2.5rem; color: var(--primary-color); font-family: 'Amiri', serif; }
+
+        .actions-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .btn-add { background-color: var(--primary-color); }
+        .btn-add:hover { background-color: #1a252f; }
+        
+        .btn-backup { background-color: var(--accent-color); }
+        .btn-backup:hover { background-color: #b8952d; }
+
+        .btn-edit { background-color: #3498db; padding: 8px 15px; font-size: 0.9rem; }
+        .btn-delete { background-color: var(--danger-color); padding: 8px 15px; font-size: 0.9rem; }
+
+        /* Table Styles */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #fafafa;
+            color: var(--primary-color);
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+        }
+
+        tr:hover { background-color: #fdfdfd; }
+        
+        .empty-state { text-align: center; padding: 40px; color: #888; font-weight: bold; }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 700px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .close-btn:hover { color: var(--danger-color); }
+
+        .modal h2 {
+            font-family: 'Amiri', serif;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: var(--primary-color); }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .btn-submit { width: 100%; background-color: var(--success-color); font-size: 1.2rem; padding: 15px; margin-top: 10px; }
+        .btn-submit:hover { background-color: #27ae60; }
+        
+        #status-msg { text-align: center; margin-top: 15px; font-weight: bold; }
+
     </style>
 </head>
 <body>
 
-<div class="admin-container">
-    <h2>إضافة مقال جديد لنهال ✍️</h2>
-    
-    <label>عنوان المقال</label>
-    <input type="text" id="title" placeholder="أدخل العنوان هنا...">
-    
-    <label>التصنيف</label>
-    <input type="text" id="category" placeholder="مثلاً: طب الأسنان، ثقافة...">
-    
-    <label>رابط الصورة</label>
-    <input type="text" id="image_url" placeholder="انسخ رابط الصورة وضعه هنا...">
-    
-    <label>نبذة مختصرة</label>
-    <textarea id="summary" placeholder="وصف قصير يظهر في صفحة المدونة..." rows="3"></textarea>
-    
-    <label>المحتوى الكامل</label>
-    <textarea id="content" placeholder="اكتب المقال كاملاً هنا..." rows="8"></textarea>
-    
-    <button onclick="publishArticle()">🚀 نشر المقال الآن</button>
-    <div id="status"></div>
-</div>
+    <header>
+        <div class="logo">Batch 32 | لوحة الإدارة</div>
+        <div>
+            <a href="blog.html" style="color: white; text-decoration: none; font-weight: bold;">العودة للمدونة ←</a>
+        </div>
+    </header>
 
-<script>
-    const SUPABASE_URL = 'https://mjyzihykduodmbicgsgg.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_Ob-thmUfjYq8gs0ZwNT52A_JNUZMVEb';
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    async function publishArticle() {
-        const status = document.getElementById('status');
-        const payload = {
-            title: document.getElementById('title').value,
-            category: document.getElementById('category').value,
-            image_url: document.getElementById('image_url').value,
-            summary: document.getElementById('summary').value,
-            content: document.getElementById('content').value,
-            likes: 0
-        };
-
-        if(!payload.title || !payload.content) {
-            status.style.color = "orange";
-            status.innerHTML = "أرجوك املأ العناوين والمحتوى أولاً!";
-            return;
-        }
-
-        status.style.color = "blue";
-        status.innerHTML = "جاري النشر في قاعدة البيانات...";
+    <div class="container">
         
-        const { data, error } = await _supabase.from('articles').insert([payload]);
+        <div class="top-panel">
+            <div class="stat-card">
+                <span>إجمالي المقالات المنشورة</span>
+                <strong id="total-articles">0</strong>
+            </div>
+            
+            <div class="actions-group">
+                <button class="btn-backup" onclick="downloadBackup()">📥 تنزيل نسخة احتياطية لكل المقالات</button>
+                <button class="btn-add" onclick="openModal()">➕ إضافة مقال جديد</button>
+            </div>
+        </div>
 
-        if (error) {
-            status.style.color = "red";
-            status.innerHTML = "خطأ: " + error.message;
-        } else {
-            status.style.color = "green";
-            status.innerHTML = "✅ تم النشر بنجاح! سيظهر في المدونة الآن.";
-            document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+        <div class="table-container">
+            <table id="articles-table">
+                <thead>
+                    <tr>
+                        <th>الرقم</th>
+                        <th>الصورة</th>
+                        <th>العنوان</th>
+                        <th>التصنيف</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr><td colspan="5" class="empty-state">جاري جلب البيانات...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div id="articleModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title-text">إضافة مقال جديد</h2>
+            
+            <input type="hidden" id="article_id">
+
+            <div class="form-group">
+                <label>عنوان المقال</label>
+                <input type="text" id="title" placeholder="أدخل العنوان هنا...">
+            </div>
+            
+            <div class="form-group">
+                <label>التصنيف</label>
+                <input type="text" id="category" placeholder="مثلاً: طب الأسنان، ثقافة...">
+            </div>
+            
+            <div class="form-group">
+                <label>رابط الصورة</label>
+                <input type="text" id="image_url" placeholder="انسخ رابط الصورة المباشر هنا...">
+            </div>
+            
+            <div class="form-group">
+                <label>نبذة مختصرة</label>
+                <textarea id="summary" placeholder="وصف قصير للمقال..." rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>المحتوى الكامل</label>
+                <textarea id="content" placeholder="اكتب المقال كاملاً هنا..." rows="8"></textarea>
+            </div>
+            
+            <button class="btn-submit" onclick="saveArticle()">💾 حفظ المقال</button>
+            <div id="status-msg"></div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://mjyzihykduodmbicgsgg.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_Ob-thmUfjYq8gs0ZwNT52A_JNUZMVEb';
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let allArticles = [];
+
+        // جلب البيانات وتحديث التحليل والجدول
+        async function loadDashboard() {
+            const { data: articles, error } = await _supabase
+                .from('articles')
+                .select('*')
+                .order('id', { ascending: false });
+
+            const tbody = document.getElementById('table-body');
+            const totalElement = document.getElementById('total-articles');
+
+            if (error) {
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state" style="color:red;">خطأ في جلب البيانات: ${error.message}</td></tr>`;
+                return;
+            }
+
+            allArticles = articles || [];
+            totalElement.innerText = allArticles.length;
+
+            if (allArticles.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا توجد مقالات مضافة حتى الآن.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = allArticles.map((art, index) => `
+                <tr>
+                    <td>${art.id}</td>
+                    <td><img src="${art.image_url || 'https://via.placeholder.com/50'}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;"></td>
+                    <td style="font-weight: bold; color: var(--primary-color);">${art.title}</td>
+                    <td><span style="background: #eee; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem;">${art.category || 'عام'}</span></td>
+                    <td>
+                        <button class="btn-edit" onclick="editArticle(${art.id})">✏️ تعديل</button>
+                        <button class="btn-delete" onclick="deleteArticle(${art.id})">🗑️ حذف</button>
+                    </td>
+                </tr>
+            `).join('');
         }
-    }
-</script>
+
+        // فتح النافذة للإضافة أو التعديل
+        function openModal(isEdit = false) {
+            document.getElementById('articleModal').style.display = "block";
+            document.getElementById('status-msg').innerHTML = "";
+            document.body.style.overflow = "hidden";
+            
+            if (!isEdit) {
+                document.getElementById('modal-title-text').innerText = "إضافة مقال جديد";
+                document.getElementById('article_id').value = "";
+                document.getElementById('title').value = "";
+                document.getElementById('category').value = "";
+                document.getElementById('image_url').value = "";
+                document.getElementById('summary').value = "";
+                document.getElementById('content').value = "";
+            }
+        }
+
+        // إغلاق النافذة
+        function closeModal() {
+            document.getElementById('articleModal').style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        // إعداد بيانات التعديل
+        function editArticle(id) {
+            const art = allArticles.find(a => a.id === id);
+            if(art) {
+                document.getElementById('modal-title-text').innerText = "تعديل المقال";
+                document.getElementById('article_id').value = art.id;
+                document.getElementById('title').value = art.title;
+                document.getElementById('category').value = art.category;
+                document.getElementById('image_url').value = art.image_url;
+                document.getElementById('summary').value = art.summary;
+                document.getElementById('content').value = art.content;
+                openModal(true);
+            }
+        }
+
+        // حفظ مقال (إضافة جديد أو تعديل موجود)
+        async function saveArticle() {
+            const status = document.getElementById('status-msg');
+            const id = document.getElementById('article_id').value;
+            
+            const payload = {
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                image_url: document.getElementById('image_url').value,
+                summary: document.getElementById('summary').value,
+                content: document.getElementById('content').value
+            };
+
+            if(!payload.title || !payload.content) {
+                status.style.color = "red";
+                status.innerHTML = "يجب إدخال العنوان والمحتوى على الأقل!";
+                return;
+            }
+
+            status.style.color = "blue";
+            status.innerHTML = "جاري الحفظ...";
+
+            let result;
+            if (id) {
+                // تعديل مقال موجود
+                result = await _supabase.from('articles').update(payload).eq('id', id);
+            } else {
+                // إضافة مقال جديد
+                payload.likes = 0;
+                result = await _supabase.from('articles').insert([payload]);
+            }
+
+            if (result.error) {
+                status.style.color = "red";
+                status.innerHTML = "خطأ: " + result.error.message;
+            } else {
+                status.style.color = "green";
+                status.innerHTML = "✅ تم الحفظ بنجاح!";
+                setTimeout(() => {
+                    closeModal();
+                    loadDashboard();
+                }, 1000);
+            }
+        }
+
+        // حذف مقال
+        async function deleteArticle(id) {
+            if (confirm("هل التأكيد مطلوب لحذف هذا المقال نهائياً؟")) {
+                const { error } = await _supabase.from('articles').delete().eq('id', id);
+                if (error) {
+                    alert("حدث خطأ أثناء الحذف: " + error.message);
+                } else {
+                    loadDashboard();
+                }
+            }
+        }
+
+        // تنزيل نسخة احتياطية بصيغة JSON
+        function downloadBackup() {
+            if (allArticles.length === 0) {
+                alert("لا توجد بيانات لتنزيلها.");
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allArticles, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "backup_articles.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        // تحميل البيانات عند فتح الصفحة
+        window.onload = loadDashboard;
+        
+        // إغلاق النافذة عند الضغط خارجها
+        window.onclick = function(event) {
+            const modal = document.getElementById('articleModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html>
