@@ -8,29 +8,42 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: 'Cairo', sans-serif; background: #f4f7f6; padding: 20px; }
-        .admin-container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #2c3e50; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; display: block; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #d4af37; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold; }
+        .admin-container { max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 25px; }
+        label { font-weight: bold; color: #555; display: block; margin-top: 10px; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #d4af37; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #b8952d; }
         #status { margin-top: 15px; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="admin-container">
-    <h2>إضافة مقال جديد ✍️</h2>
-    <input type="text" id="title" placeholder="عنوان المقال">
-    <input type="text" id="category" placeholder="التصنيف (مثلاً: طب، ثقافة)">
-    <input type="text" id="image_url" placeholder="رابط الصورة المباشر (مثل: https://site.com/image.jpg)">
-    <textarea id="summary" placeholder="نبذة مختصرة للمدونة" rows="3"></textarea>
-    <textarea id="content" placeholder="محتوى المقال الكامل" rows="8"></textarea>
+    <h2>إضافة مقال جديد لنهال ✍️</h2>
+    
+    <label>عنوان المقال</label>
+    <input type="text" id="title" placeholder="أدخل العنوان هنا...">
+    
+    <label>التصنيف</label>
+    <input type="text" id="category" placeholder="مثلاً: طب الأسنان، ثقافة...">
+    
+    <label>رابط الصورة</label>
+    <input type="text" id="image_url" placeholder="انسخ رابط الصورة وضعه هنا...">
+    
+    <label>نبذة مختصرة</label>
+    <textarea id="summary" placeholder="وصف قصير يظهر في صفحة المدونة..." rows="3"></textarea>
+    
+    <label>المحتوى الكامل</label>
+    <textarea id="content" placeholder="اكتب المقال كاملاً هنا..." rows="8"></textarea>
+    
     <button onclick="publishArticle()">🚀 نشر المقال الآن</button>
     <div id="status"></div>
 </div>
 
 <script>
     const SUPABASE_URL = 'https://mjyzihykduodmbicgsgg.supabase.co';
-    const SUPABASE_KEY = 'YOUR_SUPABASE_KEY_HERE'; // ضع مفتاحك هنا
+    const SUPABASE_KEY = 'sb_publishable_Ob-thmUfjYq8gs0ZwNT52A_JNUZMVEb';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     async function publishArticle() {
@@ -44,18 +57,23 @@
             likes: 0
         };
 
-        status.innerHTML = "جاري النشر...";
+        if(!payload.title || !payload.content) {
+            status.style.color = "orange";
+            status.innerHTML = "أرجوك املأ العناوين والمحتوى أولاً!";
+            return;
+        }
+
+        status.style.color = "blue";
+        status.innerHTML = "جاري النشر في قاعدة البيانات...";
         
         const { data, error } = await _supabase.from('articles').insert([payload]);
 
         if (error) {
             status.style.color = "red";
             status.innerHTML = "خطأ: " + error.message;
-            console.error(error);
         } else {
             status.style.color = "green";
-            status.innerHTML = "✅ تم نشر المقال بنجاح!";
-            // مسح الحقول بعد النجاح
+            status.innerHTML = "✅ تم النشر بنجاح! سيظهر في المدونة الآن.";
             document.querySelectorAll('input, textarea').forEach(el => el.value = '');
         }
     }
