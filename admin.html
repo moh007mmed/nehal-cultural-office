@@ -1,78 +1,35 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | Batch 32</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { font-family: 'Cairo', sans-serif; background: #f0f2f5; padding: 20px; direction: rtl; }
-        .admin-box { max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 25px; }
-        label { display: block; margin-top: 15px; font-weight: bold; color: #34495e; }
-        input, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; box-sizing: border-box; }
-        button { background: #2c3e50; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; font-size: 1.1rem; margin-top: 25px; transition: 0.3s; }
-        button:hover { background: #d4af37; color: #2c3e50; }
-        #status { text-align: center; margin-top: 15px; font-weight: bold; }
-    </style>
-</head>
-<body>
+<div class="admin-box" style="margin-top: 20px;">
+    <h3>إدارة المقالات المنشورة</h3>
+    <div id="articles-list">جاري تحميل المقالات...</div>
+</div>
 
-    <div class="admin-box">
-        <h2>إضافة مقال جديد للمدونة 📝</h2>
-        
-        <label>عنوان المقال</label>
-        <input type="text" id="title" placeholder="مثلاً: أخلاقيات مهنة طب الأسنان">
+<script>
+    // ... الكود السابق للإرسال ...
 
-        <label>التصنيف</label>
-        <input type="text" id="category" placeholder="مثلاً: أخلاقيات">
+    // وظيفة لجلب المقالات وعرضها مع زر الحذف
+    async function loadArticlesForAdmin() {
+        const { data, error } = await _supabase.from('articles').select('*').order('id', { ascending: false });
+        if (error) return;
 
-        <label>نبذة مختصرة</label>
-        <textarea id="summary" placeholder="وصف قصير يظهر في قائمة المدونة" rows="2"></textarea>
+        const listDiv = document.getElementById('articles-list');
+        listDiv.innerHTML = data.map(art => `
+            <div style="border-bottom: 1px solid #eee; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span>${art.title}</span>
+                <button onclick="deleteArticle(${art.id})" style="background:red; width:auto; padding: 5px 10px; font-size: 0.8rem;">حذف 🗑️</button>
+            </div>
+        `).join('');
+    }
 
-        <label>المحتوى الكامل</label>
-        <textarea id="content" placeholder="اكتب المقال بالتفصيل هنا..." rows="10"></textarea>
-
-        <button onclick="publishArticle()">نشر المقال الآن 🚀</button>
-        <div id="status"></div>
-    </div>
-
-    <script>
-        const SUPABASE_URL = 'https://mjyzihykduodmbicgsgg.supabase.co'; 
-        const SUPABASE_KEY = 'sb_publishable_Ob-thmUfjYq8gs0ZwNT52A_JNUZMVEb'; 
-
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        async function publishArticle() {
-            const statusDiv = document.getElementById('status');
-            const title = document.getElementById('title').value;
-            const category = document.getElementById('category').value;
-            const summary = document.getElementById('summary').value;
-            const content = document.getElementById('content').value;
-
-            if(!title || !content) {
-                statusDiv.style.color = 'red';
-                statusDiv.innerText = "⚠️ يرجى ملء العنوان والمحتوى!";
-                return;
-            }
-
-            statusDiv.style.color = 'orange';
-            statusDiv.innerText = "جاري النشر... ⏳";
-
-            const { data, error } = await _supabase
-                .from('articles')
-                .insert([{ title, category, summary, content }]);
-
-            if (error) {
-                statusDiv.style.color = 'red';
-                statusDiv.innerText = "❌ خطأ: " + error.message;
-            } else {
-                statusDiv.style.color = 'green';
-                statusDiv.innerText = "✅ تم النشر بنجاح! المقال متاح الآن في قاعدة البيانات.";
-                document.querySelectorAll('input, textarea').forEach(el => el.value = '');
-            }
+    // وظيفة الحذف
+    async function deleteArticle(id) {
+        if (!confirm("هل أنت متأكد من حذف هذا المقال؟")) return;
+        const { error } = await _supabase.from('articles').delete().eq('id', id);
+        if (error) alert("خطأ في الحذف");
+        else {
+            alert("تم الحذف!");
+            loadArticlesForAdmin(); // تحديث القائمة
         }
-    </script>
-</body>
-</html>
+    }
+
+    window.onload = loadArticlesForAdmin;
+</script>
