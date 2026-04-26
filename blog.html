@@ -1,36 +1,178 @@
-// وظيفة جلب وعرض المقالات في blog.html
-async function loadBlog() {
-    const { data: articles, error } = await _supabase
-        .from('articles')
-        .select('*')
-        .order('id', { ascending: false });
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المدونة | Batch 32</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: #f8f9fa; 
+            padding: 20px; 
+            margin: 0;
+            color: #1c1e21;
+        }
+        .container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 25px; 
+        }
+        .card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .tag { 
+            background: #d4af37; 
+            color: #fff; 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            font-size: 0.85rem; 
+            font-weight: bold;
+        }
+        .card h3 {
+            margin: 15px 0 10px 0;
+            color: #2c3e50;
+        }
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .card-footer {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .btn-like { 
+            background: #f0f2f5; 
+            border: none; 
+            padding: 8px 15px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-family: 'Cairo';
+            font-weight: bold;
+            color: #e74c3c;
+            transition: background 0.3s;
+        }
+        .btn-like:hover {
+            background: #ffeaea;
+        }
+        .btn-read { 
+            background: #2c3e50; 
+            color: white; 
+            border: none; 
+            padding: 8px 15px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-family: 'Cairo';
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-read:hover {
+            background: #d4af37;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
 
-    if (error) return console.log(error);
-
-    const grid = document.getElementById('blog-grid');
-    grid.innerHTML = articles.map(art => `
-        <div class="card">
-            <span class="tag">${art.category}</span>
-            <h3>${art.title}</h3>
-            <p>${art.summary}</p>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                <button onclick="handleLike(${art.id}, ${art.likes || 0})" 
-                        style="background: #f0f2f5; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer;">
-                    ❤️ <span id="likes-${art.id}">${art.likes || 0}</span>
-                </button>
-                <button class="btn-read" onclick="openArticle('${art.title}', '${art.content.replace(/\n/g, '<br>')}')">اقرأ المزيد</button>
-            </div>
+    <div class="container">
+        <h1>مكتبة المقالات 📚</h1>
+        <div id="blog-grid" class="grid">
+            <p style="text-align: center; width: 100%;">جاري تحميل المقالات من قاعدة البيانات...</p>
         </div>
-    `).join('');
-}
+    </div>
 
-// وظيفة التفاعل (الإعجاب)
-async function handleLike(id, currentLikes) {
-    const newLikes = currentLikes + 1;
-    const { error } = await _supabase.from('articles').update({ likes: newLikes }).eq('id', id);
-    if (!error) {
-        document.getElementById(`likes-${id}`).innerText = newLikes;
-    }
-}
+    <script>
+        // مفاتيح الربط الخاصة بالمشروع
+        const SUPABASE_URL = 'https://mjyzihykduodmbicgsgg.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_Ob-thmUfjYq8gs0ZwNT52A_JNUZMVEb';
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-window.onload = loadBlog;
+        // وظيفة جلب وعرض المقالات
+        async function loadBlog() {
+            const { data: articles, error } = await _supabase
+                .from('articles')
+                .select('*')
+                .order('id', { ascending: false });
+
+            if (error) {
+                console.error(error);
+                document.getElementById('blog-grid').innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في تحميل المقالات.</p>';
+                return;
+            }
+
+            const grid = document.getElementById('blog-grid');
+            
+            if (articles.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; width:100%;">لا توجد مقالات منشورة حالياً.</p>';
+                return;
+            }
+
+            grid.innerHTML = articles.map(art => `
+                <div class="card">
+                    <span class="tag">${art.category}</span>
+                    <h3>${art.title}</h3>
+                    <p>${art.summary}</p>
+                    <div class="card-footer">
+                        <button class="btn-like" onclick="handleLike(${art.id}, ${art.likes || 0})">
+                            ❤️ <span id="likes-${art.id}">${art.likes || 0}</span>
+                        </button>
+                        <button class="btn-read" onclick="alert('محتوى المقال:\\n\\n' + '${art.content.replace(/\n/g, '\\n')}')">اقرأ المزيد</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // وظيفة التفاعل (الإعجاب)
+        async function handleLike(id, currentLikes) {
+            const newLikes = currentLikes + 1;
+            
+            // تحديث الرقم في الواجهة فوراً
+            const likeSpan = document.getElementById(`likes-${id}`);
+            likeSpan.innerText = newLikes;
+            
+            // إرسال التحديث لقاعدة البيانات
+            const { error } = await _supabase
+                .from('articles')
+                .update({ likes: newLikes })
+                .eq('id', id);
+                
+            if (error) {
+                // التراجع عن الرقم في حال فشل الإرسال
+                likeSpan.innerText = currentLikes;
+                console.error("خطأ في تسجيل الإعجاب:", error);
+            }
+        }
+
+        // تشغيل وظيفة الجلب عند تحميل الصفحة
+        window.onload = loadBlog;
+    </script>
+
+</body>
+</html>
